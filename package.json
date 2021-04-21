@@ -29,6 +29,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "matrix-bot-sdk": "^0.5.17",
+    "rss-parser": "^3.12.0",
     "simple-json-db": "^1.2.3"
   },
   "devDependencies": {

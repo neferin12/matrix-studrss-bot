@@ -7,7 +7,7 @@ export interface Database {
     /**
      * Gets all entries from the db
      */
-    getEntries(): Record<string, dbItem>;
+    getAllEntries(): Record<string, dbItem>;
 
     /**
      * Sets a lastSynced date for
@@ -48,8 +48,8 @@ export class JsonDB implements Database {
         return this.db.get(roomID);
     }
 
-    getEntries(): Record<string, dbItem> {
-        return this.db.JSON;
+    getAllEntries(): Record<string, dbItem> {
+        return this.db.JSON();
     }
 
     setEntry(roomID: string, item: dbItem): void {

@@ -1,3 +1,5 @@
+import Parser from "rss-parser";
+
 export default class RSSItem {
     title: string;
     info: string;
@@ -7,7 +9,7 @@ export default class RSSItem {
     link: string;
 
 
-    constructor(item) {
+    constructor(item: Parser.Item) {
         try {
             const title = item.title.match(/\[(.*)]/i)[1];
             this.info = item.title.match(/\[(.*)](.*)/i)[2];

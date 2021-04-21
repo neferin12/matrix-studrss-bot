@@ -4,14 +4,14 @@ import {
     RichReply, AutojoinRoomsMixin
 } from "matrix-bot-sdk";
 
-import {Database, JsonDB} from "../db";
+import {Database} from "../db";
 
 class Client {
     private readonly client: MatrixClient;
     private readonly db: Database;
 
-    constructor() {
-        this.db = new JsonDB();
+    constructor(db: Database) {
+        this.db = db;
 
         const storage = new SimpleFsStorageProvider("bot.json");
         const {ACCESS_TOKEN, HOMESERVER_URL} = process.env;
@@ -42,4 +42,4 @@ class Client {
 
 }
 
-export default new Client();
+export default Client;
