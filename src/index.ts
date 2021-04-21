@@ -1,5 +1,8 @@
-import {
-    MatrixClient,
-    SimpleFsStorageProvider,
-    RichReply
-} from "matrix-bot-sdk";
+import dotenv from "dotenv";
+dotenv.config();
+
+import client from "./matrix/client";
+
+
+
+client.start().then(() => console.log("Client started!"));
