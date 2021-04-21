@@ -10,7 +10,11 @@ import {Database, JsonDB} from "./db";
 const db: Database = new JsonDB();
 
 const feeds: Array<Feed> = [];
-const client = new Client(db, ((roomID, url) => feeds.push(new Feed(url, roomID))));
+const client = new Client(db, ((roomID, url) => {
+    const newFeed = new Feed(url, roomID);
+    newFeed.startSync(db, client);
+    feeds.push(newFeed);
+}));
 
 (async () => {
     await client.start();
