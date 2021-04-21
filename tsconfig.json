@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "es2018",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+//    "allowJs": true,
+//    "removeComments": true,
+//    "noUnusedLocals": true,
+//    "sourceMap": true,
+//    "forceConsistentCasingInFileNames": true,
+//    "skipLibCheck": true,
+//    "baseUrl": ".",
+//    "paths": {
+//      "*": ["node_modules/"]
+//    },
+//    "allowSyntheticDefaultImports": true
+    "resolveJsonModule": true
+  },
+  "include": [
+    "./**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
