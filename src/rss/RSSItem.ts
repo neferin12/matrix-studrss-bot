@@ -24,4 +24,7 @@ export default class RSSItem {
         this.link = item.guid;
     }
 
+    buildHTMLMessage(): string {
+        return `<h3 style="margin-bottom: 0">${this.title}</h3><p style="margin-top: 2px; color: lightgray"><b>${this.subTitle || ""}</b></p><p>${this.info}</p><hr><p>${this.content}</p><br><a href="${this.link}">Mehr</a>`
+    }
 }

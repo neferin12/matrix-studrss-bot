@@ -10,7 +10,7 @@ class Client {
     private readonly client: MatrixClient;
     private readonly db: Database;
 
-    constructor(db: Database) {
+    constructor(db: Database, newFeed:(roomID:string, url:string) => void) {
         this.db = db;
 
         const storage = new SimpleFsStorageProvider("bot.json");
@@ -26,7 +26,9 @@ class Client {
             if (body.startsWith("!status")) {
                 this.client.sendNotice(roomId, "Studon URL is " + this.db.getEntry(roomId)?.url);
             } else if (body.startsWith("!set")) {
-                this.db.setEntry(roomId, {url: body.split(" ")[1]});
+                const url = body.split(" ")[1];
+                this.db.setEntry(roomId, {url});
+                newFeed(roomId, url);
                 this.client.sendNotice(roomId, "Studon URL was set");
             } else if (body.startsWith("!reset")) {
                 this.db.deleteEntry(roomId);
@@ -38,6 +40,10 @@ class Client {
 
     start(): Promise<void> {
         return this.client.start();
+    }
+
+    sendHTMLMessage(message: string, roomID: string): Promise<string> {
+        return this.client.sendHtmlNotice(roomID, message);
     }
 
 }
