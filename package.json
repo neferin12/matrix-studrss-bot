@@ -1,6 +1,6 @@
 {
   "name": "matrix-studrss",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Ein Bot, der aus dem Studon RSS Feed liest und die Nachrichten in einen Matrix Chat schickt",
   "main": "dist/index.js",
   "scripts": {
