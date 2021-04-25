@@ -24,15 +24,15 @@ class Client {
             const body = event["content"]["body"];
 
             if (body.startsWith("!status")) {
-                this.client.sendNotice(roomId, "Studon URL is " + this.db.getEntry(roomId)?.url);
+                this.client.sendText(roomId, "Studon URL is " + this.db.getEntry(roomId)?.url);
             } else if (body.startsWith("!set")) {
                 const url = body.split(" ")[1];
                 this.db.setEntry(roomId, {url});
                 newFeed(roomId, url);
-                this.client.sendNotice(roomId, "Studon URL was set");
+                this.client.sendText(roomId, "Studon URL was set");
             } else if (body.startsWith("!reset")) {
                 this.db.deleteEntry(roomId);
-                this.client.sendNotice(roomId, "Data was reseted");
+                this.client.sendText(roomId, "Data was reseted");
             }
 
         });
@@ -43,7 +43,7 @@ class Client {
     }
 
     sendHTMLMessage(message: string, roomID: string): Promise<string> {
-        return this.client.sendHtmlNotice(roomID, message);
+        return this.client.sendHtmlText(roomID, message);
     }
 
 }
