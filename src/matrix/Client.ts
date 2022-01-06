@@ -1,12 +1,12 @@
 import {
     MatrixClient,
     SimpleFsStorageProvider,
-    RichReply, AutojoinRoomsMixin
+    AutojoinRoomsMixin
 } from "matrix-bot-sdk";
-
+import {version} from "../../package.json"
 import {Database} from "../db";
 
-const helpHTML = "<h2>StudOnRSS Matrix Bot (VERSION)</h2>\n" +
+const helpHTML = "<h3>StudOnRSS Matrix Bot (v"+version+")</h3>\n" +
     "Available commands are:\n" +
     "<ul>\n" +
     "    <li><code>help</code>: Shows this help dialog</li>\n" +
