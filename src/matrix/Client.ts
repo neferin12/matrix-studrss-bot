@@ -40,13 +40,6 @@ class Client {
                 case "status":
                     await this.client.sendText(roomId, "Studon URL is " + this.db.getEntry(roomId)?.url);
                     break;
-                case "set":
-                    // eslint-disable-next-line no-case-declarations
-                    const url = body.split(" ")[1]
-                    this.db.setEntry(roomId, {url});
-                    newFeed(roomId, url);
-                    await this.client.sendText(roomId, "Studon URL was sucessfully set to " + url)
-                    break;
                 case "reset":
                     this.db.deleteEntry(roomId);
                     await this.client.sendText(roomId, "Data was reseted");
@@ -55,7 +48,14 @@ class Client {
                     await this.sendHTMLMessage(helpHTML, roomId);
                     break;
                 default:
-                    await this.sendHTMLMessage("<b>Unknown command \"" + o_body + "\"</b><br><p>Type <code>help</code> to get help.</p>", roomId);
+                    if (body.startsWith("set") && !!body.split(" ")[1]) {
+                        const url = body.split(" ")[1];
+                        this.db.setEntry(roomId, {url});
+                        newFeed(roomId, url);
+                        await this.client.sendText(roomId, "Studon URL was sucessfully set to " + url);
+                    } else {
+                        await this.sendHTMLMessage("<b>Unknown command \"" + o_body + "\"</b><br><p>Type <code>help</code> to get help.</p>", roomId);
+                    }
             }
 
         });
