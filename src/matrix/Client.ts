@@ -24,6 +24,8 @@ class Client {
 
         const storage = new SimpleFsStorageProvider("bot.json");
         const {ACCESS_TOKEN, HOMESERVER_URL} = process.env;
+        if(!ACCESS_TOKEN) throw new Error("No access token provided");
+        if(!HOMESERVER_URL) throw new Error("No homeserver URL provided");
         this.client = new MatrixClient(HOMESERVER_URL, ACCESS_TOKEN, storage);
         AutojoinRoomsMixin.setupOnClient(this.client);
 
