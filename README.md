@@ -3,7 +3,8 @@
 <p align="center">
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg"></a>
   <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-%23007ACC.svg?logo=typescript&logoColor=white"></a>
-  <a href="https://github.com/herzhenr/spic-server/releases"><img src="https://img.shields.io/github/release/herzhenr/spic-server.svg?logo=github&color=blue"></a>
+  <a href="https://github.com/neferin12/matrix-studrss-bot/actions/workflows/node.js.yml"><img src="https://github.com/neferin12/matrix-studrss-bot/actions/workflows/node.js.yml/badge.svg?branch=main"></a>
+  <a href="https://github.com/herzhenr/spic-server/releases"><img src="https://img.shields.io/github/release/neferin12/matrix-studrss-bot.svg?logo=github&color=blue"></a>
 </p>
 
 A bot that reads news from the Studon RSS feed and sends them to a Matrix chat.
@@ -18,6 +19,9 @@ The following commands are available for the Bot:
 # Installation
 
 The environment variables `ACCESS_TOKEN` and `HOMESERVER_URL` must be set.
+
+- `HOMESERVER_URL`: The url of the matrix server
+- `ACCESS_TOKEN`: The access token of the matrix user which the bot should use. Do not use the access token of your account as this would lead to the bot replying in your name to every message you recieve!
 
 ## Docker
 
@@ -54,7 +58,7 @@ ACCESS_TOKEN=SECRET
 
 ## Local
 
-`TypeScript` and `pnpm` as the package manager must be installed. The server can be strated with:
+`TypeScript` and `pnpm` as the package manager must be installed. The server can be started with:
 
 ```bash
 pnpm install
