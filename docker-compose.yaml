@@ -1,0 +1,9 @@
+version: "3.5"
+services:
+  matrix-studrss-bot:
+    image: matrixstudrssbot:latest
+    container_name: matrixstudrssbot
+    environment:
+      - ACCESS_TOKEN=TODO
+      - HOMESERVER_URL=TODO
+    restart: unless-stopped
