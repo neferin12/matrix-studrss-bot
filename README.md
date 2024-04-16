@@ -40,7 +40,7 @@ Alternatively the following [`docker-compose.yaml`](./docker-compose.yaml) can b
 version: "3"
 services:
   matrix-studrss-bot:
-    image: matrixstudrssbot:latest
+    image: ghcr.io/neferin12/matrix-studrss-bot:latest
     container_name: matrixstudrssbot
     env_file:
       - .env

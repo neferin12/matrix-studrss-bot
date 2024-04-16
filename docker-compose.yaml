@@ -1,11 +1,13 @@
 version: "3.5"
 services:
   matrix-studrss-bot:
-    image: matrixstudrssbot:latest
+    build: .
+    image: ghcr.io/neferin12/matrix-studrss-bot:latest
     container_name: matrixstudrssbot
+    env_file:
+      - .env
     environment:
-      - ACCESS_TOKEN=TODO
-      - HOMESERVER_URL=TODO
+      - POSTGRES_HOST=postgres
     restart: unless-stopped
   postgres:
     image: postgres:16-alpine
