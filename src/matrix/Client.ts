@@ -40,11 +40,11 @@ class Client {
 
             switch (body) {
                 case "status":
-                    await this.client.sendText(roomId, "Studon URL is " + this.db.getEntry(roomId)?.url);
+                    await this.client.sendText(roomId, "StudOn URL is " + this.db.getEntry(roomId)?.url);
                     break;
                 case "reset":
                     this.db.deleteEntry(roomId);
-                    await this.client.sendText(roomId, "Data was reseted");
+                    await this.client.sendText(roomId, "Data was reset");
                     break;
                 case "help":
                     await this.sendHTMLMessage(helpHTML, roomId);
@@ -54,7 +54,7 @@ class Client {
                         const url = body.split(" ")[1];
                         this.db.setEntry(roomId, {url});
                         newFeed(roomId, url);
-                        await this.client.sendText(roomId, "Studon URL was sucessfully set to " + url);
+                        await this.client.sendText(roomId, "StudOn URL was successfully set to " + url);
                     } else {
                         await this.sendHTMLMessage("<b>Unknown command \"" + o_body + "\"</b><br><p>Type <code>help</code> to get help.</p>", roomId);
                     }
