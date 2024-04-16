@@ -2,7 +2,7 @@ name: Docker Image Backend
 
 on:
   push:
-    branches: [ main ]
+    branches: [ release ]
 
 env:
   REGISTRY: ghcr.io
