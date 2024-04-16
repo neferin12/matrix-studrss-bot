@@ -7,3 +7,16 @@ services:
       - ACCESS_TOKEN=TODO
       - HOMESERVER_URL=TODO
     restart: unless-stopped
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=ojihuztrde234hgf4567890kjhgf
+      - POSTGRES_USER=local_user
+      - POSTGRES_DB=studrss
+
+volumes:
+  data:

@@ -9,6 +9,9 @@ export default class Feed {
     private parser: Parser;
     private lastSync: Date;
     readonly roomID: string;
+    private db: Database;
+    private client: Client;
+    private interval: NodeJS.Timer;
 
     constructor(url: string, roomID: string, lastSync: Date = new Date(0)) {
         this.lastSync = lastSync;
@@ -22,36 +25,35 @@ export default class Feed {
         this.parser = new Parser();
     }
 
-    startSync(db: Database, client: Client): void {
+    private synchronize(): void {
         console.log("sync")
-        this.getFeed(db).then(res => {
+        this.getFeed().then(async res => {
             for (const item of res) {
-                client.sendHTMLMessage(item.buildHTMLMessage(), this.roomID);
+                await this.client.sendHTMLMessage(item.buildHTMLMessage(), this.roomID);
             }
-        }).catch(console.error).finally(() => setTimeout(() => this.startSync.call(this, db, client), 1000*60));
+        }).catch(console.error);
     }
 
-    private getFeed(db: Database): Promise<Array<RSSItem>> {
-        // eslint-disable-next-line no-async-promise-executor
-        return new Promise(async (resolve, reject) => {
-            try {
-                const data: Array<Parser.Item> = (await this.parser.parseURL(this.url)).items;
-                for (const datum of data) {
-                    this.feed.push(new RSSItem(datum));
-                }
-                this.feed = this.feed.filter(item => {
-                    if (!(item.date instanceof Date && this.lastSync instanceof Date)) {
-                        reject("Not Dates");
-                    }
-                    return item.date > this.lastSync
-                });
+    startSync(db: Database, client: Client): void {
+        this.db = db;
+        this.client = client;
+        this.interval = setInterval(() => this.synchronize.call(this, db, client), 1000 * 60);
+    }
 
-                this.lastSync = new Date();
-                db.setEntry(this.roomID, {date: this.lastSync, url: this.url})
-                resolve(this.feed);
-            } catch (e) {
-                reject(e);
+    private async getFeed(): Promise<Array<RSSItem>> {
+        const data: Array<Parser.Item> = (await this.parser.parseURL(this.url)).items;
+        for (const datum of data) {
+            this.feed.push(new RSSItem(datum));
+        }
+        this.feed = this.feed.filter(item => {
+            if (!(item.date instanceof Date && this.lastSync instanceof Date)) {
+                throw new Error("Dates are not instances of Date")
             }
+            return item.date > this.lastSync
         });
+
+        this.lastSync = new Date();
+        await this.db.setEntry(this.roomID, {roomID: this.roomID, date: this.lastSync, url: this.url})
+        return this.feed;
     }
 }

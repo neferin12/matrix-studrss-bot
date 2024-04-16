@@ -29,7 +29,7 @@ class Client {
         this.client = new MatrixClient(HOMESERVER_URL, ACCESS_TOKEN, storage);
         AutojoinRoomsMixin.setupOnClient(this.client);
 
-        this.client.on("room.message", async (roomId, event) => {
+        this.client.on("room.message", async (roomID, event) => {
             if (!event["content"] || event["content"]["msgtype"] !== "m.text") return;
 
             const sender = event["sender"];
@@ -40,23 +40,23 @@ class Client {
 
             switch (body) {
                 case "status":
-                    await this.client.sendText(roomId, "StudOn URL is " + this.db.getEntry(roomId)?.url);
+                    await this.client.sendText(roomID, "StudOn URL is " + (await this.db.getEntry(roomID))?.url);
                     break;
                 case "reset":
-                    this.db.deleteEntry(roomId);
-                    await this.client.sendText(roomId, "Data was reset");
+                    await this.db.deleteEntry(roomID);
+                    await this.client.sendText(roomID, "Data was reset");
                     break;
                 case "help":
-                    await this.sendHTMLMessage(helpHTML, roomId);
+                    await this.sendHTMLMessage(helpHTML, roomID);
                     break;
                 default:
                     if (body.startsWith("set") && !!body.split(" ")[1]) {
                         const url = body.split(" ")[1];
-                        this.db.setEntry(roomId, {url});
-                        newFeed(roomId, url);
-                        await this.client.sendText(roomId, "StudOn URL was successfully set to " + url);
+                        await this.db.setEntry(roomID, {roomID, url});
+                        newFeed(roomID, url);
+                        await this.client.sendText(roomID, "StudOn URL was successfully set to " + url);
                     } else {
-                        await this.sendHTMLMessage("<b>Unknown command \"" + o_body + "\"</b><br><p>Type <code>help</code> to get help.</p>", roomId);
+                        await this.sendHTMLMessage("<b>Unknown command \"" + o_body + "\"</b><br><p>Type <code>help</code> to get help.</p>", roomID);
                     }
             }
 
